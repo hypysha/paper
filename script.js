@@ -1,47 +1,51 @@
-
-document.getElementById("papper_button").onclick = function() {myFunction(document.getElementById("papper_button").innerHTML)};
-document.getElementById("stone_button").onclick = function() {myFunction(document.getElementById("stone_button").innerHTML)};
-document.getElementById("scrissors_button").onclick = function() {myFunction(document.getElementById("scrissors_button").innerHTML)};
-
 function getRandomObjectFromArray(array) {
     let randomIndex = Math.floor(Math.random() * array.length);
     return array[randomIndex];
 }
 
-function myFunction(user_value) {
-    let myArray = ['🗿️️', '✂️', '📃️'];
-
-
+function playGame(user_value) {
+    const myArray = ['🗿️️', '✂️', '📃️'];
+    const computer = getRandomObjectFromArray(myArray);
     
-    document.getElementById("computer").innerHTML = getRandomObjectFromArray(myArray);
+    document.getElementById("computer").innerHTML = computer;
     document.getElementById("player").innerHTML = user_value;
-
-    let computer = document.getElementById("computer").innerHTML
-
-    if (user_value == '🗿️️' && computer == '✂️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-    } else if (user_value == '🗿️️' && computer == '📃️') {
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
-    } else if (user_value == '🗿️️' && computer == '🗿️️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
-    }
-
-    if (user_value == '✂️' && computer == '📃️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-    } else if (user_value == '✂️' && computer == '🗿️️') {
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
-    } else if (user_value == '✂️' && computer == '✂️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
-    }
-
-    if (user_value == '📃️' && computer == '🗿️️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-    } else if (user_value == '📃️' && computer == '✂️') {
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
-    } else if (user_value == '📃️' && computer == '📃️') {
-        document.getElementById("me").innerHTML  = Number(document.getElementById("me").innerHTML) + 1
-        document.getElementById("comp").innerHTML  = Number(document.getElementById("comp").innerHTML) + 1
+    
+    const results = {
+        "🗿️️": {
+          "✂️": "me",
+          "📃️": "comp",
+          "🗿️️": "both"
+        },
+        "✂️": {
+          "📃️": "me",
+          "🗿️️": "comp",
+          "✂️": "both"
+        },
+        "📃️": {
+          "🗿️️": "me",
+          "✂️": "comp",
+          "📃️": "both"
+        }
+    };
+    
+    const result = results[user_value][computer];
+    
+    if (result === "me") {
+        document.getElementById("me").innerHTML++;
+    } else if (result === "comp") {
+        document.getElementById("comp").innerHTML++;
+    } else if (result === "both") {
+        document.getElementById("me").innerHTML++;
+        document.getElementById("comp").innerHTML++;
     }
 }
+
+document.getElementById("papper_button").onclick = function() {
+    playGame(document.getElementById("papper_button").innerHTML)
+};
+document.getElementById("stone_button").onclick = function() {
+    playGame(document.getElementById("stone_button").innerHTML)
+};
+document.getElementById("scrissors_button").onclick = function() {
+    playGame(document.getElementById("scrissors_button").innerHTML)
+};
